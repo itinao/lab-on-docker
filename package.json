@@ -1,0 +1,33 @@
+{
+  "name": "lab-on-docker",
+  "version": "1.0.0",
+  "description": "",
+  "config": {
+    "PROJECT_ID": "itinao-laaab",
+    "CLUSTER_NAME": "laaab"
+  },
+  "scripts": {
+    "build-all": "npm run build-db && npm run build-api && npm run build-nginx && npm run build-nginx-nuxt && npm run build-web",
+    "build-db": "docker build -t gcr.io/${PROJECT_ID}/db:v1 tododb",
+    "build-api": "docker build -t gcr.io/${PROJECT_ID}/api:v1 todoapi",
+    "build-nginx": "docker build -t gcr.io/${PROJECT_ID}/nginx:v1 todonginx",
+    "build-nginx-nuxt": "docker build -f todonginx/Dockerfile-nuxt -t gcr.io/${PROJECT_ID}/nginx-nuxt:v1 todonginx",
+    "build-web": "docker build -t gcr.io/${PROJECT_ID}/web:v1 todoweb",
+    "push-all": "npm run push-db && npm run push-api && npm run push-nginx && npm run push-nginx-nuxt && npm run push-web",
+    "push-db": "gcloud docker -- push gcr.io/${PROJECT_ID}/db:v1",
+    "push-api": "gcloud docker -- push gcr.io/${PROJECT_ID}/api:v1",
+    "push-nginx": "gcloud docker -- push gcr.io/${PROJECT_ID}/nginx:v1",
+    "push-nginx-nuxt": "gcloud docker -- push gcr.io/${PROJECT_ID}/nginx-nuxt:v1",
+    "push-web": "gcloud docker -- push gcr.io/${PROJECT_ID}/web:v1",
+    "create-clusters": "gcloud container clusters create ${CLUSTER_NAME} --cluster-version=1.9.7-gke.6 --machine-type=n1-standard-1 --num-nodes=3 || (gcloud container clusters get-credentials ${CLUSTER_NAME} && kubectl get nodes)",
+    "serve-proxy": "kubectl proxy",
+    "apply-ssd": "kubectl apply -f gke-files/storage-class-ssd.yaml",
+    "apply-db-master": "kubectl apply -f gke-files/mysql-master.yaml",
+    "apply-db-slave": "kubectl apply -f gke-files/mysql-slave.yaml",
+    "apply-api": "kubectl apply -f gke-files/api.yaml",
+    "apply-web": "kubectl apply -f gke-files/web.yaml",
+    "apply-ingress": "kubectl apply -f gke-files/ingress.yaml"
+  },
+  "author": "",
+  "license": "ISC"
+}
