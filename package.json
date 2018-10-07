@@ -21,12 +21,12 @@
     "push-web": "gcloud docker -- push gcr.io/${PROJECT_ID}/web:v1",
     "create-clusters": "gcloud container clusters create ${CLUSTER_NAME} --cluster-version=1.9.7-gke.6 --machine-type=n1-standard-1 --num-nodes=3 || (gcloud container clusters get-credentials ${CLUSTER_NAME} && kubectl get nodes)",
     "serve-proxy": "kubectl proxy",
-    "apply-ssd": "kubectl apply -f gke-files/storage-class-ssd.yaml",
-    "apply-db-master": "kubectl apply -f gke-files/mysql-master.yaml",
-    "apply-db-slave": "kubectl apply -f gke-files/mysql-slave.yaml",
-    "apply-api": "kubectl apply -f gke-files/api.yaml",
-    "apply-web": "kubectl apply -f gke-files/web.yaml",
-    "apply-ingress": "kubectl apply -f gke-files/ingress.yaml"
+    "apply-ssd": "kubectl apply -f manifests/storage-class-ssd.yaml",
+    "apply-db-master": "kubectl apply -f manifests/mysql-master.yaml",
+    "apply-db-slave": "kubectl apply -f manifests/mysql-slave.yaml",
+    "apply-api": "kubectl apply -f manifests/api.yaml",
+    "apply-web": "kubectl apply -f manifests/web.yaml",
+    "apply-ingress": "kubectl apply -f manifests/ingress.yaml"
   },
   "author": "",
   "license": "ISC"
